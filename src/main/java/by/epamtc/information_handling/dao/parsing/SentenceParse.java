@@ -3,12 +3,13 @@ package by.epamtc.information_handling.dao.parsing;
 import by.epamtc.information_handling.bean.Component;
 import by.epamtc.information_handling.bean.Sentence;
 import by.epamtc.information_handling.bean.Text;
+import by.epamtc.information_handling.dao.reader.PropertyReader;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SentenceParse implements DataParse {
-    private final String sentenceRegEx = "(\\.+.+[$\\n])|((\\d+\\.)+.+$)|((.+?\\n*?)+?[:.!?]\\s?)";
+    private final String sentenceRegEx = PropertyReader.getInstance().getProperties().getProperty("sentenceRegEx");
     private static SentenceParse instance;
     Pattern sentencePattern = Pattern.compile(sentenceRegEx);
 

@@ -3,14 +3,15 @@ package by.epamtc.information_handling.dao.parsing;
 import by.epamtc.information_handling.bean.CodeBlock;
 import by.epamtc.information_handling.bean.Component;
 import by.epamtc.information_handling.bean.Text;
+import by.epamtc.information_handling.dao.reader.PropertyReader;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BlockParse implements DataParse {
 
-    private final String blocksRegExp = "(?<Text>[^{}]+\\n)" + "|" + "(?<Code>.*\\{\\n(.*\\n)+?\\n*}\\n)";
-    private Pattern pattern = Pattern.compile(blocksRegExp);
+    private final String blocksRegEx = PropertyReader.getInstance().getProperties().getProperty("blocksRegEx");
+    private Pattern pattern = Pattern.compile(blocksRegEx);
     private static BlockParse instance;
 
     private BlockParse() {

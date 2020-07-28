@@ -2,14 +2,16 @@ package by.epamtc.information_handling.dao.parsing;
 
 import by.epamtc.information_handling.bean.Component;
 import by.epamtc.information_handling.bean.SentenceComponent;
+import by.epamtc.information_handling.dao.reader.PropertyReader;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SentenceComponentParse implements DataParse {
     private static SentenceComponentParse instance;
-    private final String wordRegEx = "(\\w+|\\W)";
-    private Pattern pattern = Pattern.compile(wordRegEx);
+    private final String sentenceComponentRegEx = PropertyReader.getInstance().getProperties()
+            .getProperty("sentenceComponentRegEx");
+    private Pattern pattern = Pattern.compile(sentenceComponentRegEx);
 
     public static SentenceComponentParse getInstance() {
         if (instance == null) {
