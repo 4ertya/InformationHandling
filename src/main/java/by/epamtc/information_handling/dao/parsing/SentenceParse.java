@@ -1,0 +1,37 @@
+package by.epamtc.information_handling.dao.parsing;
+
+import by.epamtc.information_handling.bean.Component;
+import by.epamtc.information_handling.bean.Sentence;
+import by.epamtc.information_handling.bean.Text;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class SentenceParse implements DataParse {
+    private final String sentenceRegEx = "(\\.+.+[$\\n])|((\\d+\\.)+.+$)|((.+?\\n*?)+?[:.!?]\\s?)";
+    private static SentenceParse instance;
+    Pattern sentencePattern = Pattern.compile(sentenceRegEx);
+
+    private SentenceParse() {
+    }
+
+    public static SentenceParse getInstance() {
+        if (instance == null) {
+            instance = new SentenceParse();
+        }
+        return instance;
+    }
+
+    @Override
+    public void parse(String input, Component textObject) {
+        Text text = (Text) textObject;
+        Matcher matcher = sentencePattern.matcher(input);
+        while (matcher.find()) {
+            String str = matcher.group().trim();
+            Sentence sentence = new Sentence(str, text.getComponentNumber());
+            SentenceComponentParse.getInstance().parse(str, sentence);
+            text.addSentence(sentence);
+            text.increaseComponentNumber();
+        }
+    }
+}
