@@ -3,6 +3,7 @@ package by.epamtc.information_handling.dao.reader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 
 public class PropertyReader {
@@ -26,10 +27,13 @@ public class PropertyReader {
     private PropertyReader() {
     }
 
-
     {
         try {
-            properties.load(new FileInputStream(new File("src\\main\\resources\\regex.properties")));
+            File file = new File(Objects.requireNonNull(getClass()
+                    .getClassLoader()
+                    .getResource("regex.properties"))
+                    .getFile());
+            properties.load(new FileInputStream(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
